@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>누구지: 누군가 구할 때까지, 지구를</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;700&family=Noto+Sans+Thai:wght@400;700&family=Inter:wght@400;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', 'Noto Sans Thai', 'Inter', sans-serif;
+            background-color: #020617;
+            color: #f8fafc;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .title-font { font-family: 'Black Han Sans', sans-serif; }
+
+        .option-btn {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .option-btn:hover {
+            background: rgba(51, 65, 85, 0.9);
+            transform: translateY(-2px);
+            border-color: rgba(52, 211, 153, 0.5);
+        }
+
+        .animal-slot {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .status-3 { background: rgba(52, 211, 153, 0.15); border: 1px solid rgba(52, 211, 153, 0.4); transform: scale(1.1); } /* Best */
+        .status-2 { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); } /* Good */
+        .status-1 { background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); filter: saturate(0.7); } /* Warning */
+        .status-0 { background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3); filter: grayscale(1) opacity(0.3); transform: scale(0.9); } /* Danger */
+
+        .earth-glow {
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            margin: 0 auto;
+            transition: all 1s ease;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 5rem;
+        }
+        .earth-green { background: radial-gradient(circle, #10b981 0%, #064e3b 100%); box-shadow: 0 0 40px rgba(16, 185, 129, 0.4); }
+        .earth-red { background: radial-gradient(circle, #f43f5e 0%, #7f1d1d 100%); box-shadow: 0 0 50px rgba(244, 63, 94, 0.5); animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 40px rgba(244, 63, 94, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 70px rgba(244, 63, 94, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 0 40px rgba(244, 63, 94, 0.5); }
+        }
+
+        .overlay {
+            position: fixed; inset: 0; background: #020617;
+            z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="overlay">
+        <h1 class="title-font text-5xl md:text-7xl mb-4 text-emerald-400 text-center leading-tight">누구지:<br><span class="text-white text-3xl md:text-5xl">누군가 구할 때까지, 지구를</span></h1>
+        <p id="ui-desc" class="text-slate-400 text-center mb-10 max-w-lg leading-relaxed text-lg px-4"></p>
+        
+        <div class="flex flex-wrap justify-center gap-3 mb-10">
+            <button onclick="setLang('ko')" class="lang-btn px-6 py-3 rounded-2xl bg-slate-800 border-2 border-transparent transition-all">한국어</button>
+            <button onclick="setLang('en')" class="lang-btn px-6 py-3 rounded-2xl bg-slate-800 border-2 border-transparent transition-all">English</button>
+            <button onclick="setLang('th')" class="lang-btn px-6 py-3 rounded-2xl bg-slate-800 border-2 border-transparent transition-all">ไทย</button>
+        </div>
+        
+        <button id="btn-start" onclick="startGame()" class="px-14 py-6 bg-emerald-500 rounded-3xl font-black text-2xl hover:bg-emerald-400 shadow-[0_10px_40px_rgba(52,211,153,0.3)] transition-all text-white"></button>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-4 py-8">
+        <!-- Dashboard -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+            <div class="lg:col-span-1 flex flex-col items-center justify-center bg-slate-900/50 p-8 rounded-[3rem] border border-white/5">
+                <div id="earth-visual" class="earth-glow earth-green mb-6">🌍</div>
+                <div class="text-center">
+                    <span id="ui-earth-status" class="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">Earth Status</span>
+                    <h3 id="earth-label" class="text-2xl font-black text-white">초록 지구</h3>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 bg-slate-900/50 p-8 rounded-[3rem] border border-white/5 flex flex-col justify-between">
+                <div class="flex justify-between items-end mb-4">
+                    <div>
+                        <span id="ui-progress-label" class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1">Progress</span>
+                        <span id="step-counter" class="text-3xl font-black text-emerald-400">01 / 30</span>
+                    </div>
+                    <div class="text-right">
+                        <span id="ui-score-label" class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1">Survival Rate</span>
+                        <span id="health-percent" class="text-3xl font-black text-blue-400">100%</span>
+                    </div>
+                </div>
+                <div class="h-4 w-full bg-slate-800 rounded-full overflow-hidden mb-8 border border-white/5">
+                    <div id="progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-blue-500 w-0 transition-all duration-1000"></div>
+                </div>
+                <div id="animal-grid" class="grid grid-cols-10 gap-2"></div>
+            </div>
+        </div>
+
+        <!-- Question Box -->
+        <div id="game-box" class="bg-slate-900/80 p-8 md:p-14 rounded-[3rem] border border-white/10 shadow-2xl relative">
+            <div id="animal-tag" class="absolute -top-6 left-1/2 -translate-x-1/2 bg-emerald-500 px-6 py-2 rounded-full font-bold shadow-xl flex items-center gap-2">
+                <span id="current-animal-icon"></span>
+                <span id="current-animal-name" class="text-sm"></span>
+            </div>
+            <h2 id="question-text" class="text-2xl md:text-4xl font-bold mb-12 leading-snug text-center pt-4"></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="options-box"></div>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedback-modal" class="fixed inset-0 bg-slate-950/98 z-50 hidden flex-col items-center justify-center p-8 text-center backdrop-blur-2xl">
+        <div id="fb-icon" class="text-9xl mb-8"></div>
+        <div id="fb-msg" class="text-4xl font-black mb-6 max-w-2xl"></div>
+        <p id="fb-sub" class="text-xl text-slate-400 mb-12 max-w-lg leading-relaxed"></p>
+        <button id="btn-next" onclick="nextQuestion()" class="px-16 py-5 bg-emerald-500 text-white font-black text-xl rounded-2xl hover:bg-emerald-400 transition-all shadow-2xl"></button>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="overlay hidden">
+        <div id="final-earth" class="text-9xl mb-10">🌍</div>
+        <h1 id="ui-result-title" class="title-font text-5xl mb-6 text-emerald-400"></h1>
+        <div id="final-stats" class="text-6xl font-black mb-8 text-white"></div>
+        <div id="final-desc" class="max-w-2xl text-center text-slate-300 mb-14 text-xl leading-relaxed px-6"></div>
+        <div class="flex gap-4">
+            <button id="btn-restart" onclick="location.reload()" class="px-12 py-5 bg-slate-800 rounded-2xl font-bold text-white hover:bg-slate-700 transition-all border border-white/10"></button>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        let totalScore = 0;
+        let lang = 'ko';
+        
+        const animals = [
+            { n: { ko: "북극곰", en: "Polar Bear", th: "หมีขั้วโลก" }, i: "🐻‍❄️" },
+            { n: { ko: "바다거북", en: "Sea Turtle", th: "เต่าทะเล" }, i: "🐢" },
+            { n: { ko: "판다", en: "Giant Panda", th: "แพนด้ายักษ์" }, i: "🐼" },
+            { n: { ko: "벵골호랑이", en: "Bengal Tiger", th: "เสือโคร่งเบงกอล" }, i: "🐅" },
+            { n: { ko: "아프리카코끼리", en: "African Elephant", th: "ช้างแอฟริกา" }, i: "🐘" },
+            { n: { ko: "눈표범", en: "Snow Leopard", th: "เสือดาวหิมะ" }, i: "🐆" },
+            { n: { ko: "검은코뿔소", en: "Black Rhino", th: "แร드ดำ" }, i: "🦏" },
+            { n: { ko: "오랑우탄", en: "Orangutan", th: "อุรังอุตัง" }, i: "🦧" },
+            { n: { ko: "마운틴고릴라", en: "Mountain Gorilla", th: "กอริลลาภูเขา" }, i: "🦍" },
+            { n: { ko: "대왕고래", en: "Blue Whale", th: "วาฬสีน้ำเงิน" }, i: "🐋" },
+            { n: { ko: "레드판다", en: "Red Panda", th: "แพนด้าแดง" }, i: "🦊" },
+            { n: { ko: "수달", en: "Otter", th: "นาก" }, i: "🦦" },
+            { n: { ko: "황제펭귄", en: "Emperor Penguin", th: "เพนกวินจักรพรรดิ" }, i: "🐧" },
+            { n: { ko: "두루미", en: "Red-crowned Crane", th: "นกกระเรียนมงกุฎแดง" }, i: "🦢" },
+            { n: { ko: "아시아사자", en: "Asiatic Lion", th: "สิงโตเอเชีย" }, i: "🦁" },
+            { n: { ko: "나무늘보", en: "Sloth", th: "สล็อธ" }, i: "🦥" },
+            { n: { ko: "꿀벌", en: "Honey Bee", th: "ผึ้ง" }, i: "🐝" },
+            { n: { ko: "듀공", en: "Dugong", th: "พะยูน" }, i: "🧜‍♀️" },
+            { n: { ko: "재규어", en: "Jaguar", th: "จาหัวร์" }, i: "🐆" },
+            { n: { ko: "치타", th: "เสือชีตาห์", en: "Cheetah" }, i: "🐆" },
+            { n: { ko: "붉은바다거북", en: "Loggerhead Turtle", th: "เต่าหญ้า" }, i: "🐢" },
+            { n: { ko: "코알라", en: "Koala", th: "โคอาล่า" }, i: "🐨" },
+            { n: { ko: "고래상어", en: "Whale Shark", th: "ฉลามวาฬ" }, i: "🦈" },
+            { n: { ko: "하마", en: "Hippo", th: "ฮิปโป" }, i: "🦛" },
+            { n: { ko: "기린", en: "Giraffe", th: "ยีราฟ" }, i: "🦒" },
+            { n: { ko: "앵무새", en: "Parrot", th: "นกแก้ว" }, i: "🦜" },
+            { n: { ko: "바다사자", en: "Sea Lion", th: "สิงโตทะเล" }, i: "🦭" },
+            { n: { ko: "여우원숭이", en: "Lemur", th: "ลีเมอร์" }, i: "🐒" },
+            { n: { ko: "독수리", en: "Eagle", th: "นกอินทรี" }, i: "🦅" },
+            { n: { ko: "북극여우", en: "Arctic Fox", th: "สุนัขจิ้งจอกอาร์กติก" }, i: "🦊" }
+        ];
+
+        const questions = [
+            {
+                q: { ko: "급식 시간에 싫어하는 채소가 나왔어. 어떻게 할까?", en: "Vegetables you hate are served for lunch. What to do?", th: "ผักที่คุณไม่ชอบถูกเสิร์ฟในมื้อเที่ยง คุณจะทำอย่างไร?" },
+                o: [
+                    { t: { ko: "지구를 위해 남김없이 다 먹는다", en: "Eat everything for Earth", th: "กินให้หมดเพื่อโลก" }, s: 3 },
+                    { t: { ko: "먹을 수 있는 만큼만 받고 나머지는 안 받는다", en: "Take only what I can eat", th: "ตักแค่ที่กินไหว" }, s: 2 },
+                    { t: { ko: "받아두고 선생님 몰래 조금 남긴다", en: "Take it and leave a bit secretly", th: "ตักมาแล้วแอบเหลือไว้นิดหน่อย" }, s: 1 },
+                    { t: { ko: "그냥 다 버린다", en: "Throw it all and go to snack bar", th: "ทิ้งให้หมดแล้วไปซื้อขนมกิน" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "체육 수업 가기 전, 교실 전등이 켜져 있는 걸 봤어.", en: "Lights are on before PE class. What now?", th: "ก่อนไปคาบพละ เห็นไฟในห้องเปิดทิ้งไว้" },
+                o: [
+                    { t: { ko: "맨 마지막에 나가며 모든 스위치를 확인한다", en: "Check all switches at last", th: "เช็คสวิตช์ทุกตัวก่อนออกคนสุดท้าย" }, s: 3 },
+                    { t: { ko: "내가 본 전등만 끄고 나간다", en: "Turn off only the ones I saw", th: "ปิดแค่ดวงที่เห็นแล้วออกไป" }, s: 2 },
+                    { t: { ko: "친구에게 꺼달라고 부탁한다", en: "Ask a friend to turn them off", th: "ฝากเพื่อนช่วยปิดหน่อย" }, s: 1 },
+                    { t: { ko: "당연히 누군가 끄겠지 하고 그냥 간다", en: "Assume someone will turn it off", th: "เดี๋ยวก็คงมีคนปิดเองแหละ" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "양치질을 할 때, 컵을 사용하는 게 귀찮다면?", en: "Laziness vs Using a cup for brushing teeth?", th: "ขี้เกียจใช้แก้วตอนแปรงฟันจัง..." },
+                o: [
+                    { t: { ko: "항상 컵에 물을 받아 아껴 쓴다", en: "Always use a cup to save water", th: "ใช้แก้วรองน้ำทุกครั้งเพื่อประหยัด" }, s: 3 },
+                    { t: { ko: "손으로 물을 받아 조금씩 쓴다", en: "Use hands to take a little water", th: "ใช้มือรองน้ำแทนแก้ว" }, s: 2 },
+                    { t: { ko: "물 온도를 맞추느라 잠시 틀어둔다", en: "Let it run to adjust temperature", th: "เปิดน้ำทิ้งไว้ปรับอุณหภูมิแวบนึง" }, s: 1 },
+                    { t: { ko: "양치가 끝날 때까지 물을 틀어놓는다", en: "Let water run until finished", th: "เปิดน้ำไหลทิ้งไว้จนแปรงเสร็จ" }, s: 0 }
+                ]
+            }
+        ];
+
+        // 30개 데이터 보강 (시뮬레이션을 위해 복제 확장)
+        while(questions.length < 30) {
+            questions.push(JSON.parse(JSON.stringify(questions[questions.length % 3])));
+        }
+
+        const trans = {
+            ko: {
+                desc: "나의 사소한 습관 30가지가 30마리 동물의 운명을 정합니다.\n나의 선택은 지구를 빨갛게 만들까요, 초록색으로 지켜낼까요?",
+                start: "지구하자",
+                progress: "구조 진행도",
+                scoreLabel: "생존율",
+                earthStatus: "지구 상태",
+                earthGreen: "초록 지구",
+                earthRed: "빨간 지구 (온난화)",
+                next: "다음 상황으로",
+                resultTitle: "최종 구조 보고서",
+                survivalIdx: "생태계 생존 지표",
+                restart: "다시 도전하기",
+                level3: "완벽한 수호자!",
+                level2: "훌륭한 실천가",
+                level1: "위험한 타협...",
+                level0: "편리함의 대가",
+                sub3: "동물들이 당신을 보고 환하게 웃고 있어요!",
+                sub2: "좋은 선택입니다. 조금만 더 노력해볼까요?",
+                sub1: "한 번의 타협이 모여 지구가 뜨거워지고 있습니다.",
+                sub0: "당신의 편리함 때문에 친구들이 집을 잃고 말았어요.",
+                resGood: "당신은 진정한 지구의 영웅입니다! 동물의 왕국이 당신을 기억할 것입니다.",
+                resAvg: "절반의 성공입니다. 하지만 '적당히'라는 마음이 지구를 지치게 하고 있네요.",
+                resBad: "경고! 당신의 생활 방식이 지속된다면 동물들은 사라지고 지구는 멈추게 됩니다."
+            },
+            en: {
+                desc: "30 small habits of students decide the fate of 30 animals.\nWill your compromise turn Earth red or keep it green?",
+                start: "Start Earth Rescue",
+                progress: "Rescue Progress",
+                scoreLabel: "Survival Rate",
+                earthStatus: "Earth Status",
+                earthGreen: "Green Earth",
+                earthRed: "Red Earth (Global Warming)",
+                next: "Next Situation",
+                resultTitle: "Final Rescue Report",
+                survivalIdx: "Ecosystem Index",
+                restart: "Try Again",
+                level3: "Perfect Guardian!",
+                level2: "Great Practitioner",
+                level1: "Dangerous Compromise...",
+                level0: "Price of Convenience",
+                sub3: "The animals are smiling brightly at you!",
+                sub2: "Good choice. Can we try a little harder?",
+                sub1: "Each compromise adds up to a warmer planet.",
+                sub0: "Friends lost their homes due to your convenience.",
+                resGood: "You are a true Earth Hero! The animal kingdom will remember you.",
+                resAvg: "Halfway success. But 'doing enough' is tiring the planet.",
+                resBad: "Warning! If your lifestyle continues, animals will vanish and Earth will stop."
+            },
+            th: {
+                desc: "30 นิสัยเล็กๆ ของนักเรียนตัดสินชะตากรรมของสัตว์ 30 ตัว\nการประนีประนอมของคุณจะทำให้โลกเป็นสีแดงหรือสีเขียว?",
+                start: "เริ่มการกู้โลก",
+                progress: "ความคืบหน้า",
+                scoreLabel: "อัตราการรอดชีวิต",
+                earthStatus: "สถานะของโลก",
+                earthGreen: "โลกสีเขียว",
+                earthRed: "โลกสีแดง (ภาวะโลกร้อน)",
+                next: "สถานการณ์ต่อไป",
+                resultTitle: "รายงานกู้โลกฉบับสุดท้าย",
+                survivalIdx: "ดัชนีระบบนิเวศ",
+                restart: "ลองอีกครั้ง",
+                level3: "ผู้พิทักษ์ที่สมบูรณ์แบบ!",
+                level2: "นักปฏิบัติที่ยอดเยี่ยม",
+                level1: "การประนีประนอมที่อันตราย...",
+                level0: "ราคาของความสบาย",
+                sub3: "สัตว์ทุกตัวกำลังยิ้มให้คุณอย่างสดใส!",
+                sub2: "ทางเลือกที่ดี พยายามขึ้นอีกนิดนะ?",
+                sub1: "การยอมความในแต่ละครั้งรวมกันทำให้โลกร้อนขึ้น",
+                sub0: "เพื่อนๆ ต้องเสียบ้านเพราะความสบายของคุณ",
+                resGood: "คุณคือฮีโร่ตัวจริงของโลก! อาณาจักรสัตว์จะจดจำคุณไว้",
+                resAvg: "สำเร็จเพียงครึ่งเดียว ความรู้สึก 'แค่นี้พอ' กำลังทำให้โลกเหนื่อยล้า",
+                resBad: "คำเตือน! หากวิถีชีวิตแบบนี้ยังดำเนินต่อไป สัตว์จะหายไปและโลกจะหยุดหมุน"
+            }
+        };
+
+        // Utility: Shuffle array
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function setLang(l) {
+            lang = l;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                const bLang = btn.getAttribute('onclick').match(/'(.*?)'/)[1];
+                btn.classList.toggle('bg-emerald-600', bLang === lang);
+                btn.classList.toggle('border-white/40', bLang === lang);
+            });
+            updateStaticUI();
+        }
+
+        function updateStaticUI() {
+            const t = trans[lang];
+            document.getElementById('ui-desc').innerText = t.desc;
+            document.getElementById('btn-start').innerText = t.start;
+            document.getElementById('ui-progress-label').innerText = t.progress;
+            document.getElementById('ui-score-label').innerText = t.scoreLabel;
+            document.getElementById('ui-earth-status').innerText = t.earthStatus;
+            document.getElementById('btn-next').innerText = t.next;
+            document.getElementById('ui-result-title').innerText = t.resultTitle;
+            document.getElementById('btn-restart').innerText = t.restart;
+            updateDynamicStatus();
+        }
+
+        function startGame() {
+            document.getElementById('start-screen').classList.add('hidden');
+            initAnimalGrid();
+            renderQuestion();
+        }
+
+        function initAnimalGrid() {
+            const grid = document.getElementById('animal-grid');
+            grid.innerHTML = '';
+            animals.forEach((a, i) => {
+                const div = document.createElement('div');
+                div.className = "animal-slot";
+                div.id = `animal-${i}`;
+                div.innerText = a.i;
+                grid.appendChild(div);
+            });
+        }
+
+        function renderQuestion() {
+            if (currentStep >= 30) {
+                showResult();
+                return;
+            }
+            const q = questions[currentStep];
+            const a = animals[currentStep];
+            
+            document.getElementById('step-counter').innerText = `${String(currentStep + 1).padStart(2, '0')} / 30`;
+            document.getElementById('progress-bar').style.width = `${((currentStep+1)/30)*100}%`;
+            
+            document.getElementById('current-animal-icon').innerText = a.i;
+            document.getElementById('current-animal-name').innerText = a.n[lang];
+            document.getElementById('question-text').innerText = q.q[lang];
+            
+            const optionsBox = document.getElementById('options-box');
+            optionsBox.innerHTML = '';
+            
+            // Shuffle options for each question
+            const shuffledOptions = shuffle([...q.o]);
+            
+            shuffledOptions.forEach((opt) => {
+                const b = document.createElement('button');
+                b.className = "option-btn p-6 rounded-3xl font-bold flex flex-col justify-center items-center text-center gap-2";
+                b.innerHTML = `<span>${opt.t[lang]}</span>`;
+                b.onclick = () => handleChoice(opt.s);
+                optionsBox.appendChild(b);
+            });
+            
+            updateDynamicStatus();
+        }
+
+        function handleChoice(score) {
+            totalScore += score;
+            const slot = document.getElementById(`animal-${currentStep}`);
+            slot.classList.add(`status-${score}`);
+            
+            const t = trans[lang];
+            document.getElementById('fb-icon').innerText = animals[currentStep].i;
+            document.getElementById('fb-msg').innerText = t[`level${score}`];
+            document.getElementById('fb-sub').innerText = t[`sub${score}`];
+            
+            const msgEl = document.getElementById('fb-msg');
+            const colors = ["text-rose-500", "text-amber-500", "text-blue-400", "text-emerald-400"];
+            msgEl.className = `text-4xl font-black mb-6 max-w-2xl ${colors[score]}`;
+
+            document.getElementById('feedback-modal').classList.remove('hidden');
+            document.getElementById('feedback-modal').style.display = 'flex';
+        }
+
+        function nextQuestion() {
+            document.getElementById('feedback-modal').classList.add('hidden');
+            document.getElementById('feedback-modal').style.display = 'none';
+            currentStep++;
+            renderQuestion();
+        }
+
+        function updateDynamicStatus() {
+            const possibleScore = (currentStep + 1) * 3;
+            const survivalRate = Math.round((totalScore / (possibleScore || 1)) * 100);
+            document.getElementById('health-percent').innerText = `${survivalRate}%`;
+            
+            const earthVisual = document.getElementById('earth-visual');
+            const earthLabel = document.getElementById('earth-label');
+            
+            if (survivalRate < 60) {
+                earthVisual.className = "earth-glow earth-red";
+                earthVisual.innerText = "🔥";
+                earthLabel.innerText = trans[lang].earthRed;
+                earthLabel.classList.add('text-rose-500');
+            } else {
+                earthVisual.className = "earth-glow earth-green";
+                earthVisual.innerText = "🌍";
+                earthLabel.innerText = trans[lang].earthGreen;
+                earthLabel.classList.remove('text-rose-500');
+            }
+        }
+
+        function showResult() {
+            document.getElementById('result-screen').classList.remove('hidden');
+            const finalPercent = Math.round((totalScore / 90) * 100);
+            document.getElementById('final-stats').innerText = `${trans[lang].survivalIdx}: ${finalPercent}%`;
+            
+            let finalIcon = "🌍";
+            let desc = "";
+            if (finalPercent > 85) {
+                finalIcon = "🌳";
+                desc = trans[lang].resGood;
+            } else if (finalPercent > 50) {
+                finalIcon = "⚠️";
+                desc = trans[lang].resAvg;
+            } else {
+                finalIcon = "🔥";
+                desc = trans[lang].resBad;
+            }
+            
+            document.getElementById('final-earth').innerText = finalIcon;
+            document.getElementById('final-desc').innerText = desc;
+        }
+
+        // Init
+        setLang('ko');
+    </script>
+</body>
+</html>
