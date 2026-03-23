@@ -41,10 +41,10 @@
             font-size: 1.5rem;
             transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .status-3 { background: rgba(52, 211, 153, 0.15); border: 1px solid rgba(52, 211, 153, 0.4); transform: scale(1.1); } /* Best */
-        .status-2 { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); } /* Good */
-        .status-1 { background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); filter: saturate(0.7); } /* Warning */
-        .status-0 { background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3); filter: grayscale(1) opacity(0.3); transform: scale(0.9); } /* Danger */
+        .status-3 { background: rgba(52, 211, 153, 0.15); border: 1px solid rgba(52, 211, 153, 0.4); transform: scale(1.1); } 
+        .status-2 { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); } 
+        .status-1 { background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); filter: saturate(0.7); } 
+        .status-0 { background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3); filter: grayscale(1) opacity(0.3); transform: scale(0.9); } 
 
         .earth-glow {
             width: 180px; height: 180px;
@@ -72,7 +72,6 @@
 </head>
 <body>
 
-    <!-- Start Screen -->
     <div id="start-screen" class="overlay">
         <h1 class="title-font text-5xl md:text-7xl mb-4 text-emerald-400 text-center leading-tight">누구지:<br><span class="text-white text-3xl md:text-5xl">누군가 구할 때까지, 지구를</span></h1>
         <p id="ui-desc" class="text-slate-400 text-center mb-10 max-w-lg leading-relaxed text-lg px-4"></p>
@@ -87,7 +86,6 @@
     </div>
 
     <div class="max-w-5xl mx-auto px-4 py-8">
-        <!-- Dashboard -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
             <div class="lg:col-span-1 flex flex-col items-center justify-center bg-slate-900/50 p-8 rounded-[3rem] border border-white/5">
                 <div id="earth-visual" class="earth-glow earth-green mb-6">🌍</div>
@@ -115,18 +113,16 @@
             </div>
         </div>
 
-        <!-- Question Box -->
         <div id="game-box" class="bg-slate-900/80 p-8 md:p-14 rounded-[3rem] border border-white/10 shadow-2xl relative">
             <div id="animal-tag" class="absolute -top-6 left-1/2 -translate-x-1/2 bg-emerald-500 px-6 py-2 rounded-full font-bold shadow-xl flex items-center gap-2">
                 <span id="current-animal-icon"></span>
                 <span id="current-animal-name" class="text-sm"></span>
             </div>
-            <h2 id="question-text" class="text-2xl md:text-4xl font-bold mb-12 leading-snug text-center pt-4"></h2>
+            <h2 id="question-text" class="text-xl md:text-3xl font-bold mb-12 leading-snug text-center pt-4"></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="options-box"></div>
         </div>
     </div>
 
-    <!-- Feedback Modal -->
     <div id="feedback-modal" class="fixed inset-0 bg-slate-950/98 z-50 hidden flex-col items-center justify-center p-8 text-center backdrop-blur-2xl">
         <div id="fb-icon" class="text-9xl mb-8"></div>
         <div id="fb-msg" class="text-4xl font-black mb-6 max-w-2xl"></div>
@@ -134,7 +130,6 @@
         <button id="btn-next" onclick="nextQuestion()" class="px-16 py-5 bg-emerald-500 text-white font-black text-xl rounded-2xl hover:bg-emerald-400 transition-all shadow-2xl"></button>
     </div>
 
-    <!-- Result Screen -->
     <div id="result-screen" class="overlay hidden">
         <div id="final-earth" class="text-9xl mb-10">🌍</div>
         <h1 id="ui-result-title" class="title-font text-5xl mb-6 text-emerald-400"></h1>
@@ -161,7 +156,7 @@
             { n: { ko: "오랑우탄", en: "Orangutan", th: "อุรังอุตัง" }, i: "🦧" },
             { n: { ko: "마운틴고릴라", en: "Mountain Gorilla", th: "กอริลลาภูเขา" }, i: "🦍" },
             { n: { ko: "대왕고래", en: "Blue Whale", th: "วาฬสีน้ำเงิน" }, i: "🐋" },
-            { n: { ko: "레드판다", en: "Red Panda", th: "แพนด้าแดง" }, i: "🦊" },
+            { n: { ko: "레드판다", en: "Red Panda", th: "แพน้าแดง" }, i: "🦊" },
             { n: { ko: "수달", en: "Otter", th: "นาก" }, i: "🦦" },
             { n: { ko: "황제펭귄", en: "Emperor Penguin", th: "เพนกวินจักรพรรดิ" }, i: "🐧" },
             { n: { ko: "두루미", en: "Red-crowned Crane", th: "นกกระเรียนมงกุฎแดง" }, i: "🦢" },
@@ -190,7 +185,7 @@
                     { t: { ko: "지구를 위해 남김없이 다 먹는다", en: "Eat everything for Earth", th: "กินให้หมดเพื่อโลก" }, s: 3 },
                     { t: { ko: "먹을 수 있는 만큼만 받고 나머지는 안 받는다", en: "Take only what I can eat", th: "ตักแค่ที่กินไหว" }, s: 2 },
                     { t: { ko: "받아두고 선생님 몰래 조금 남긴다", en: "Take it and leave a bit secretly", th: "ตักมาแล้วแอบเหลือไว้นิดหน่อย" }, s: 1 },
-                    { t: { ko: "그냥 다 버린다", en: "Throw it all and go to snack bar", th: "ทิ้งให้หมดแล้วไปซื้อขนมกิน" }, s: 0 }
+                    { t: { ko: "그냥 다 버리고 매점에 간다", en: "Throw it all and go to snack bar", th: "ทิ้งให้หมดแล้วไปซื้อขนมกิน" }, s: 0 }
                 ]
             },
             {
@@ -210,90 +205,252 @@
                     { t: { ko: "물 온도를 맞추느라 잠시 틀어둔다", en: "Let it run to adjust temperature", th: "เปิดน้ำทิ้งไว้ปรับอุณหภูมิแวบนึง" }, s: 1 },
                     { t: { ko: "양치가 끝날 때까지 물을 틀어놓는다", en: "Let water run until finished", th: "เปิดน้ำไหลทิ้งไว้จนแปรงเสร็จ" }, s: 0 }
                 ]
+            },
+            {
+                q: { ko: "어제 쓴 알림장 뒷면이 많이 비어있네. 어떻게 쓸까?", en: "The back of yesterday's notebook is empty. How to use?", th: "สมุดบันทึกเมื่อวานยังเหลือที่ว่างเยอะเลย จะทำอย่างไร?" },
+                o: [
+                    { t: { ko: "연습장으로 사용해 끝까지 다 쓴다", en: "Use as a scratchpad until full", th: "ใช้เป็นกระดาษทดจนเต็ม" }, s: 3 },
+                    { t: { ko: "중요한 메모를 적어둔다", en: "Use for important memos", th: "จดบันทึกเรื่องสำคัญ" }, s: 2 },
+                    { t: { ko: "그냥 넘기고 새 페이지를 쓴다", en: "Skip and use a new page", th: "ข้ามไปใช้หน้าใหม่เลย" }, s: 1 },
+                    { t: { ko: "보기 싫어서 찢어서 버린다", en: "Tear it out and throw it away", th: "ฉีกทิ้งเพราะมันดูไม่สวย" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "학교 문구점에서 새 샤프를 사고 싶어. 내 샤프는 아직 멀쩡해.", en: "Want a new pencil even if yours is fine. Buy it?", th: "อยากได้ดินสอกดแท่งใหม่จัง ทั้งที่แท่งเดิมยังใช้ได้ดีอยู่เลย" },
+                o: [
+                    { t: { ko: "고장 날 때까지는 지금 것을 아껴 쓴다", en: "Use current one until broken", th: "ใช้แท่งเดิมจนกว่าจะพัง" }, s: 3 },
+                    { t: { ko: "친구에게 물려주고 새것을 산다", en: "Give it to a friend and buy new", th: "ยกให้เพื่อนแล้วซื้อใหม่" }, s: 2 },
+                    { t: { ko: "용돈을 모아서 나중에 산다", en: "Save allowance and buy later", th: "เก็บเงินค่าขนมไว้ซื้อวันหลัง" }, s: 1 },
+                    { t: { ko: "유행하는 디자인이니까 바로 산다", en: "Buy now because it's trendy", th: "ซื้อเลยเพราะมันกำลังฮิต" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "편의점에서 간식을 샀어. 비닐봉투가 필요할까?", en: "Bought snacks at a store. Need a plastic bag?", th: "ซื้อขนมที่ร้านสะดวกซื้อ ต้องใช้ถุงพลาสติกไหม?" },
+                o: [
+                    { t: { ko: "주머니에 넣거나 그냥 들고 간다", en: "Carry by hand or in pocket", th: "ใส่กระเป๋าเสื้อหรือถือเอา" }, s: 3 },
+                    { t: { ko: "집에서 가져온 가방에 넣는다", en: "Put in my own bag", th: "ใส่กระเป๋าที่พกมาจากบ้าน" }, s: 2 },
+                    { t: { ko: "어쩔 수 없이 100원 내고 산다", en: "Pay for a bag unavoidably", th: "ยอมจ่ายเงินซื้อถุง" }, s: 1 },
+                    { t: { ko: "당연히 새 비닐봉투에 담아달라고 한다", en: "Ask for a new bag automatically", th: "ขอถุงพลาสติกใหม่ทันที" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "복도에 종이비행기가 떨어져 있어. 쓰레기인 것 같아.", en: "A paper plane is on the floor. It looks like trash.", th: "เห็นเครื่องบินกระดาษตกอยู่ที่โถงทางเดิน ดูเหมือนเป็นขยะเลย" },
+                o: [
+                    { t: { ko: "주워서 재활용함에 넣는다", en: "Pick up and recycle it", th: "เก็บไปทิ้งในถังรีไซเคิล" }, s: 3 },
+                    { t: { ko: "주워서 일반 쓰레기통에 넣는다", en: "Pick up and throw in trash bin", th: "เก็บไปทิ้งถังขยะธรรมดา" }, s: 2 },
+                    { t: { ko: "내 발에 걸리적거리면 옆으로 치운다", en: "Kick it aside if it's in the way", th: "เตะหลบไปข้างๆ ถ้าขวางทาง" }, s: 1 },
+                    { t: { ko: "내가 버린 게 아니니 그냥 지나친다", en: "Ignore it since it's not mine", th: "ไม่ใช่ของเรา ไม่ต้องสนใจ" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "화장실에서 손을 씻고 나서 종이 타월을 몇 장 쓸까?", en: "How many paper towels to use after washing hands?", th: "ล้างมือเสร็จแล้ว จะใช้กระดาษเช็ดมือกี่แผ่นดี?" },
+                o: [
+                    { t: { ko: "손을 털고 한 장으로 충분히 닦는다", en: "Shake hands and use one sheet", th: "สะบัดมือก่อนแล้วใช้แผ่นเดียว" }, s: 3 },
+                    { t: { ko: "개인 손수건을 꺼내서 닦는다", en: "Use my own handkerchief", th: "ใช้ผ้าเช็ดหน้าส่วนตัว" }, s: 2 },
+                    { t: { ko: "두 세장 뽑아서 대충 닦는다", en: "Take 2-3 sheets to wipe roughly", th: "ดึงมา 2-3 แผ่นเช็ดลวกๆ" }, s: 1 },
+                    { t: { ko: "많이 뽑아서 물기를 완벽히 없앤다", en: "Take many to dry completely", th: "ดึงมาเยอะๆ เช็ดให้แห้งสนิท" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "방학 숙제를 위해 컴퓨터를 썼어. 다 끝나면?", en: "Finished homework on computer. What now?", th: "ทำการบ้านด้วยคอมพิวเตอร์เสร็จแล้ว ทำไงต่อดี?" },
+                o: [
+                    { t: { ko: "컴퓨터와 모니터를 끄고 코드까지 뽑는다", en: "Turn off and unplug everything", th: "ปิดคอม ปิดหน้าจอ และดึงปลั๊กออก" }, s: 3 },
+                    { t: { ko: "전원 버튼만 누르고 나간다", en: "Just press the power button", th: "กดปิดแค่ปุ่มเปิด-ปิด" }, s: 2 },
+                    { t: { ko: "절전 모드로 해두고 나중에 다시 본다", en: "Use sleep mode for later", th: "เปิดโหมดสลีปไว้ เผื่อมาใช้ต่อ" }, s: 1 },
+                    { t: { ko: "유튜브를 틀어놓고 밥 먹으러 간다", en: "Leave YouTube on and go eat", th: "เปิดยูทูบค้างไว้แล้วไปกินข้าว" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "새 장난감이 사고 싶어. 하지만 집에 안 쓰는 게 많아.", en: "Want a new toy but have many old ones. Action?", th: "อยากได้ของเล่นใหม่จัง แต่ที่บ้านก็มีที่ไม่ได้เล่นเยอะเลย" },
+                o: [
+                    { t: { ko: "안 쓰는 장난감을 나눔하거나 바꾼다", en: "Donate or swap old toys", th: "เอาของเล่นเก่าไปบริจาคหรือแลกกัน" }, s: 3 },
+                    { t: { ko: "집에 있는 것으로 새로운 놀이를 만든다", en: "Invent a new game with old toys", th: "เอาของที่มีอยู่มาประยุกต์เล่นแบบใหม่" }, s: 2 },
+                    { t: { ko: "중고로 저렴하게 하나만 산다", en: "Buy one cheap second-hand toy", th: "ซื้อของมือสองราคาถูกๆ สักชิ้น" }, s: 1 },
+                    { t: { ko: "졸라서 새 장난감 세트를 다 산다", en: "Beg and buy the whole new set", th: "ตื๊อให้ซื้อชุดใหม่ให้ได้" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "에어컨을 켜고 싶은데, 선풍기도 옆에 있어.", en: "Want AC but a fan is nearby. Which one?", th: "อยากเปิดแอร์จัง แต่พัดลมก็อยู่ข้างๆ นะ" },
+                o: [
+                    { t: { ko: "선풍기만 켜고 창문을 열어둔다", en: "Only use fan and open window", th: "เปิดแค่พัดลมและเปิดหน้าต่าง" }, s: 3 },
+                    { t: { ko: "에어컨 온도를 높이고 선풍기를 같이 켠다", en: "Set AC high and use with fan", th: "ตั้งแอร์อุณหภูมิสูงหน่อยและเปิดพัดลมช่วย" }, s: 2 },
+                    { t: { ko: "에어컨만 아주 시원하게 켠다", en: "Turn on AC only very cool", th: "เปิดแอร์ให้เย็นฉ่ำไปเลย" }, s: 1 },
+                    { t: { ko: "추울 정도로 켜고 이불을 덮는다", en: "Set to freezing and use blanket", th: "เปิดจนหนาวแล้วห่มผ้าเอา" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "재활용 분리수거함 앞에 섰어. 우유갑이 있네.", en: "At recycling bins with a milk carton. How?", th: "ยืนอยู่หน้าถังขยะรีไซเคิลพร้อมกล่องนม ทำไงดี?" },
+                o: [
+                    { t: { ko: "씻어서 말린 후 펼쳐서 넣는다", en: "Wash, dry, flatten, and recycle", th: "ล้าง ตากให้แห้ง แกะแผ่ออกแล้วทิ้ง" }, s: 3 },
+                    { t: { ko: "물로 대충 헹궈서 넣는다", en: "Rinse roughly and recycle", th: "ล้างน้ำลวกๆ แล้วทิ้ง" }, s: 2 },
+                    { t: { ko: "그냥 찌그러뜨려서 종이함에 넣는다", en: "Just crush and put in paper bin", th: "แค่บี้ๆ แล้วทิ้งลงถังกระดาษ" }, s: 1 },
+                    { t: { ko: "귀찮으니 그냥 일반 쓰레기에 버린다", en: "Too lazy, throw in general trash", th: "ขี้เกียจจัง ทิ้งถังขยะทั่วไปละกัน" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "길가에 핀 예쁜 꽃을 발견했어. 어떻게 할까?", en: "Found a pretty flower on the road. Action?", th: "เจอพวงดอกไม้สวยๆ ริมทาง คุณจะทำอย่างไร?" },
+                o: [
+                    { t: { ko: "눈으로만 즐기고 사진을 찍는다", en: "Enjoy with eyes and take photos", th: "ดูด้วยตาและถ่ายรูปไว้" }, s: 3 },
+                    { t: { ko: "향기만 살짝 맡고 지나간다", en: "Just smell and pass by", th: "แค่ดมกลิ่นแล้วเดินจากไป" }, s: 2 },
+                    { t: { ko: "가장 예쁜 것 하나만 꺾어서 가져간다", en: "Pick only the prettiest one", th: "เด็ดอันที่สวยที่สุดไปอันเดียว" }, s: 1 },
+                    { t: { ko: "꽃다발을 만들려고 다 꺾는다", en: "Pick them all for a bouquet", th: "เด็ดมาให้หมดทำเป็นช่อดอกไม้" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "우유를 다 마셨는데, 빨대가 비닐에 싸여 있어.", en: "Finished milk, straw is in plastic. Trash?", th: "ดื่มนมหมดแล้ว หลอดในซองพลาสติกเหลืออยู่ ทิ้งยังไง?" },
+                o: [
+                    { t: { ko: "비닐과 빨대를 따로 분리해서 버린다", en: "Separate plastic and straw", th: "แยกซองพลาสติกกับหลอดออกจากกัน" }, s: 3 },
+                    { t: { ko: "둘 다 플라스틱함에 한꺼번에 넣는다", en: "Put both in plastic bin", th: "ทิ้งรวมกันในถังพลาสติก" }, s: 2 },
+                    { t: { ko: "그냥 우유갑 안에 넣어서 버린다", en: "Put inside milk carton", th: "ใส่กลับเข้าไปในกล่องนม" }, s: 1 },
+                    { t: { ko: "아무 데나 휙 던져서 버린다", en: "Just throw it anywhere", th: "โยนทิ้งไปตรงไหนก็ได้" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "친구 생일이야. 선물 포장을 어떻게 할까?", en: "Friend's birthday. How to wrap the gift?", th: "วันเกิดเพื่อน จะห่อของขวัญยังไงดี?" },
+                o: [
+                    { t: { ko: "안 쓰는 예쁜 종이나 보자기 활용", en: "Use old pretty paper or cloth", th: "ใช้กระดาษสวยๆ ที่มีอยู่หรือผ้าห่อ" }, s: 3 },
+                    { t: { ko: "포장지 없이 리본만 묶어준다", en: "No wrapping, just a ribbon", th: "ไม่ห่อ แค่ผูกโบว์ให้" }, s: 2 },
+                    { t: { ko: "새 포장지를 사서 정성껏 포장한다", en: "Buy new paper and wrap carefully", th: "ซื้อกระดาษห่อใหม่แล้วห่ออย่างดี" }, s: 1 },
+                    { t: { ko: "비닐 포장지에 상자까지 겹겹이 포장", en: "Layered plastic and box wrapping", th: "ห่อพลาสติกแล้วใส่กล่องซ้อนหลายชั้น" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "목욕할 때 욕조에 물을 받아볼까?", en: "Should I fill the bathtub for a bath?", th: "จะรองน้ำใส่ในอ่างเพื่ออาบน้ำดีไหม?" },
+                o: [
+                    { t: { ko: "샤워기로 빠르게 씻고 나온다", en: "Take a quick shower instead", th: "ใช้ฝักบัวอาบน้ำให้เสร็จอย่างรวดเร็ว" }, s: 3 },
+                    { t: { ko: "샤워하면서 비누칠할 때 물을 끈다", en: "Turn off water while soaping", th: "ปิดน้ำระหว่างถูสบู่" }, s: 2 },
+                    { t: { ko: "욕조에 반쯤만 물을 받아 씻는다", en: "Fill the tub halfway only", th: "รองน้ำแค่ครึ่งอ่างพอ" }, s: 1 },
+                    { t: { ko: "물을 가득 채우고 한참 동안 논다", en: "Fill it full and play for long", th: "เปิดน้ำจนเต็มแล้วเล่นนานๆ" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "자주 안 쓰는 전자기기 코드가 꽂혀 있어.", en: "Unused electronics are plugged in. Action?", th: "เครื่องใช้ไฟฟ้าที่ไม่ได้ใช้บ่อยเสียบปลั๊กทิ้งไว้" },
+                o: [
+                    { t: { ko: "항상 안 쓸 때는 뽑아두는 습관", en: "Always unplug when not in use", th: "ถอดปลั๊กออกทุกครั้งหลังใช้งาน" }, s: 3 },
+                    { t: { ko: "멀티탭 스위치만 꺼둔다", en: "Just turn off the power strip", th: "ปิดแค่สวิตช์ที่ปลั๊กพ่วง" }, s: 2 },
+                    { t: { ko: "엄마가 뽑으라고 할 때까지 둔다", en: "Leave it until mom says so", th: "ทิ้งไว้จนกว่าแม่จะสั่งให้ถอด" }, s: 1 },
+                    { t: { ko: "귀찮아서 일 년 내내 꽂아둔다", en: "Leave it plugged in all year", th: "ขี้เกียจถอด เสียบไว้อย่างนั้นทั้งปี" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "학습지를 풀다가 틀렸어. 수정 테이프를 쓸까?", en: "Made a mistake on homework. Use tape?", th: "ทำโจทย์ผิด จะใช้ลิควิดเทปไหม?" },
+                o: [
+                    { t: { ko: "연필로 적어서 지우개로 지운다", en: "Write with pencil and erase", th: "เขียนด้วยดินสอแล้วใช้ยางลบ" }, s: 3 },
+                    { t: { ko: "최대한 아껴서 조금만 사용한다", en: "Use very little tape", th: "ใช้เทปประหยัดๆ แค่นิดเดียวพอ" }, s: 2 },
+                    { t: { ko: "틀릴 때마다 계속 덧칠한다", en: "Tape over every mistake", th: "ผิดตรงไหนก็ป้ายทับตรงนั้น" }, s: 1 },
+                    { t: { ko: "새 종이에 다시 적는다", en: "Rewrite everything on new paper", th: "เขียนใหม่ลงในกระดาษแผ่นใหม่เลย" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "음료수를 마시려는데 유리컵과 일회용 컵이 있어.", en: "Glass cup vs Disposable cup for a drink?", th: "จะดื่มน้ำ มีแก้วแก้วกับแก้วพลาสติกใช้ทิ้ง" },
+                o: [
+                    { t: { ko: "당연히 씻어서 쓰는 유리컵 선택", en: "Choose the washable glass cup", th: "เลือกแก้วแก้วที่ล้างใช้ซ้ำได้แน่นอน" }, s: 3 },
+                    { t: { ko: "집에 있는 개인 텀블러 사용", en: "Use my own tumbler", th: "ใช้กระบอกน้ำส่วนตัว" }, s: 2 },
+                    { t: { ko: "설거지가 귀찮아서 종이컵 사용", en: "Use paper cup to avoid washing", th: "ขี้เกียจล้าง ใช้แก้วกระดาษละกัน" }, s: 1 },
+                    { t: { ko: "편하게 쓰고 버리는 플라스틱 컵", en: "Plastic cup for convenience", th: "ใช้แก้วพลาสติก สบายดี ใช้เสร็จก็ทิ้ง" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "겨울이야. 집안 온도를 어떻게 할까?", en: "It's winter. How to set the room temp?", th: "หน้าหนาวแล้ว จะปรับอุณหภูมิในบ้านยังไงดี?" },
+                o: [
+                    { t: { ko: "내복이나 수면 잠옷을 챙겨 입는다", en: "Wear thermal underwear or PJ", th: "ใส่ชุดนอนหนาๆ หรือเสื้อตัวใน" }, s: 3 },
+                    { t: { ko: "온도를 조금 낮추고 양말을 신는다", en: "Lower temp slightly and wear socks", th: "ลดอุณหภูมิลงนิดนึงแล้วใส่ถุงเท้า" }, s: 2 },
+                    { t: { ko: "보일러를 아주 세게 틀어둔다", en: "Turn the heater up high", th: "เปิดฮีทเตอร์แรงๆ ไปเลย" }, s: 1 },
+                    { t: { ko: "덥게 틀어놓고 반팔을 입고 지낸다", en: "Turn it high and wear T-shirts", th: "เปิดให้อุ่นจัดแล้วใส่แขนสั้นเดินในบ้าน" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "학교 가는 길, 가까운 거리는 어떻게 갈까?", en: "How to travel a short distance to school?", th: "ระยะทางไปโรงเรียนใกล้ๆ จะไปยังไงดี?" },
+                o: [
+                    { t: { ko: "친구와 수다 떨며 걸어서 간다", en: "Walk and talk with a friend", th: "เดินไปคุยกับเพื่อนไป" }, s: 3 },
+                    { t: { ko: "자전거를 타고 빠르게 간다", en: "Ride a bicycle to go fast", th: "ปั่นจักรยานไปอย่างรวดเร็ว" }, s: 2 },
+                    { t: { ko: "부모님 차를 타고 편하게 간다", en: "Ride in parents' car comfortably", th: "นั่งรถคุณพ่อคุณแม่ไป สบายดี" }, s: 1 },
+                    { t: { ko: "늦었다고 택시를 잡아 탄다", en: "Take a taxi because I'm late", th: "สายแล้ว เรียกแท็กซี่เลย" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "다 읽은 동화책이 책장에 꽂혀 있어.", en: "Finished storybooks are on the shelf. Action?", th: "หนังสือิทานที่อ่านจบแล้ววางอยู่บนหิ้ง" },
+                o: [
+                    { t: { ko: "도서관에 기부하거나 동생 준다", en: "Donate to library or give away", th: "บริจาคให้ห้องสมุดหรือให้น้อง" }, s: 3 },
+                    { t: { ko: "친구와 책을 서로 바꿔 본다", en: "Swap books with a friend", th: "แลกหนังสือกับเพื่อนอ่าน" }, s: 2 },
+                    { t: { ko: "그냥 먼지가 쌓이게 둔다", en: "Just let them gather dust", th: "วางทิ้งไว้ให้ฝุ่นจับ" }, s: 1 },
+                    { t: { ko: "종이 뭉치로 그냥 버린다", en: "Throw them away as scrap paper", th: "ทิ้งเป็นเศษกระดาษไปเลย" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "패스트푸드점에서 감자튀김을 먹을 때 케첩은?", en: "How much ketchup for fries at fast food?", th: "กินเฟรนช์ฟรายส์ที่ร้าน จะเอาซอสเซสมะเขือเทศแค่ไหน?" },
+                o: [
+                    { t: { ko: "먹을 만큼만 조금씩 짠다", en: "Take only as much as needed", th: "กดมาแค่ที่พอกิน" }, s: 3 },
+                    { t: { ko: "하나만 짜서 다 먹고 더 짠다", en: "Use one packet at a time", th: "ใช้ทีละซอง กินหมดค่อยแกะใหม่" }, s: 2 },
+                    { t: { ko: "모자랄까 봐 미리 듬뿍 가져온다", en: "Take plenty in advance", th: "หยิบมาเผื่อเยอะๆ กลัวไม่พอ" }, s: 1 },
+                    { t: { ko: "많이 가져와서 반 이상 남긴다", en: "Take lots and leave over half", th: "หยิบมาเยอะๆ แล้วเหลือทิ้งมากกว่าครึ่ง" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "캠핑을 갔어. 일회용 나무젓가락을 쓸까?", en: "At camping. Use disposable chopsticks?", th: "ไปแคมป์ปิ้ง จะใช้ตะเกียบไม้แบบใช้แล้วทิ้งไหม?" },
+                o: [
+                    { t: { ko: "집에서 챙겨온 수저 세트 사용", en: "Use my own spoon and chopsticks", th: "ใช้ชุดช้อนส้อมที่เตรียมมาจากบ้าน" }, s: 3 },
+                    { t: { ko: "캠핑장에 있는 다회용 식기 사용", en: "Use reusable dishes provided", th: "ใช้จานชามที่ล้างได้ของที่พัก" }, s: 2 },
+                    { t: { ko: "설거지가 힘들 것 같아 일회용 사용", en: "Use disposable to avoid washing", th: "ใช้แบบทิ้งเลย กลัวล้างเหนื่อย" }, s: 1 },
+                    { t: { ko: "편하게 쓰고 불에 다 태워 버린다", en: "Use and burn them in the fire", th: "ใช้เสร็จก็โยนเข้ากองไฟให้หมด" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "여름 방학, 모기가 방에 들어왔어.", en: "Summer break, a mosquito is in the room.", th: "ปิดเทอมหน้าร้อน มียุงเข้ามาในห้อง" },
+                o: [
+                    { t: { ko: "모기장을 설치하고 잔다", en: "Use a mosquito net", th: "กางมุ้งนอน" }, s: 3 },
+                    { t: { ko: "손으로 잡으려고 노력한다", en: "Try to catch it by hand", th: "พยายามตบด้วยมือ" }, s: 2 },
+                    { t: { ko: "모기향을 하루 종일 피워둔다", en: "Leave mosquito coil on all day", th: "จุดยากันยุงทิ้งไว้ทั้งวัน" }, s: 1 },
+                    { t: { ko: "살충제를 온 방안에 듬뿍 뿌린다", en: "Spray pesticide all over room", th: "ฉีดไบกอนไปทั่วห้องเลย" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "선생님이 이면지를 나눠주셨어.", en: "Teacher gave out scrap paper.", th: "คุณครูแจกกระดาษรีไซเค일 (หน้าเดียว)" },
+                o: [
+                    { t: { ko: "중요한 연습장으로 아껴 쓴다", en: "Use carefully as a scratchpad", th: "ใช้เป็นกระดาษทดอย่างประหยัด" }, s: 3 },
+                    { t: { ko: "그림 그리는 용도로 쓴다", en: "Use for drawing", th: "เอาไว้ใช้วาดรูป" }, s: 2 },
+                    { t: { ko: "책상 서랍에 넣어두고 잊는다", en: "Put in drawer and forget", th: "ใส่ไว้ในลิ้นชักแล้วลืมไปเลย" }, s: 1 },
+                    { t: { ko: "새 종이가 아니라고 바로 버린다", en: "Throw away because it's not new", th: "ทิ้งเลยเพราะไม่ใช่กระดาษแผ่นใหม่" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "동네 공원에 쓰레기가 떨어져 있어.", en: "Trash is on the ground at the park.", th: "มีขยะตกอยู่ในสวนสาธารณะแถวบ้าน" },
+                o: [
+                    { t: { ko: "봉투를 가져와 주변을 다 청소한다", en: "Bring a bag and clean up", th: "เอาถุงมาเก็บกวาดรอบๆ ให้สะอาด" }, s: 3 },
+                    { t: { ko: "눈에 띄는 큰 것만 주워 버린다", en: "Pick up only big noticeable ones", th: "เก็บแค่ชิ้นใหญ่ๆ ที่เห็นชัด" }, s: 2 },
+                    { t: { ko: "공원 관리인이 하겠지 하고 둔다", en: "Assume the keeper will clean it", th: "เดี๋ยวคนดูแลก็มาเก็บเองแหละ" }, s: 1 },
+                    { t: { ko: "쓰레기가 많다고 투덜대며 지나간다", en: "Complain about trash and walk by", th: "บ่นว่าขยะเยอะจังแล้วเดินผ่านไป" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "음식 배달을 시킬 때 일회용품 수저 선택은?", en: "Option for disposable cutlery for delivery?", th: "สั่งอาหารเดลิเวอรี่ จะรับช้อนส้อมพลาสติกไหม?" },
+                o: [
+                    { t: { ko: "일회용품 안 받기 체크박스 선택", en: "Check 'No disposable cutlery'", th: "เลือก 'ไม่รับช้อนส้อมพลาสติก'" }, s: 3 },
+                    { t: { ko: "집에 있는 수저를 쓰겠다고 메모", en: "Note that I'll use home cutlery", th: "เขียนโน้ตบอกว่าจะใช้ช้อนที่บ้าน" }, s: 2 },
+                    { t: { ko: "받아두고 나중에 쓸까 봐 챙긴다", en: "Take it to use sometime later", th: "รับมาเก็บไว้ เผื่อได้ใช้ทีหลัง" }, s: 1 },
+                    { t: { ko: "설거지하기 싫으니 당연히 받는다", en: "Take it to avoid washing dishes", th: "รับมาสิ ขี้เกียจล้างจาน" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "옷이 작아져서 못 입게 되었어.", en: "Clothes became too small to wear.", th: "เสื้อผ้าเล็กลงจนใส่ไม่ได้แล้ว" },
+                o: [
+                    { t: { ko: "의류 수거함에 넣거나 기부한다", en: "Donate or put in clothing bin", th: "ใส่ถังบริจาคเสื้อผ้าหรือให้คนอื่น" }, s: 3 },
+                    { t: { ko: "동생이나 친한 친구에게 물려준다", en: "Pass down to siblings or friends", th: "ยกให้น้องหรือเพื่อนสนิท" }, s: 2 },
+                    { t: { ko: "걸레로 쓰려고 잘라둔다", en: "Cut them to use as rags", th: "ตัดเอาไว้ทำผ้าขี้ริ้ว" }, s: 1 },
+                    { t: { ko: "그냥 일반 쓰레기봉투에 버린다", en: "Throw in general trash bag", th: "ทิ้งลงถังขยะธรรมดาเลย" }, s: 0 }
+                ]
+            },
+            {
+                q: { ko: "비가 오는데 일회용 우산 비닐이 비치되어 있어.", en: "It's raining, plastic umbrella bags provided.", th: "ฝนตก มีซองพลาสติกใส่ร่มวางไว้ให้" },
+                o: [
+                    { t: { ko: "우산 제수기(물기 제거기)를 쓴다", en: "Use an umbrella water remover", th: "ใช้เครื่องสลัดน้ำฝนแทน" }, s: 3 },
+                    { t: { ko: "우산을 잘 털어서 가방에 넣는다", en: "Shake off water and carry", th: "สะบัดร่มให้แห้งแล้วถือไว้" }, s: 2 },
+                    { t: { ko: "하나만 뽑아서 조심히 쓴다", en: "Take one and use carefully", th: "หยิบมาซองเดียวแล้วใช้อย่างระวัง" }, s: 1 },
+                    { t: { ko: "들어갈 때마다 새 비닐을 쓴다", en: "Use a new bag every time I enter", th: "เข้าๆ ออกๆ ก็ใช้ซองใหม่ทุกรอบ" }, s: 0 }
+                ]
             }
         ];
 
-        // 30개 데이터 보강 (시뮬레이션을 위해 복제 확장)
-        while(questions.length < 30) {
-            questions.push(JSON.parse(JSON.stringify(questions[questions.length % 3])));
-        }
-
-        const trans = {
-            ko: {
-                desc: "나의 사소한 습관 30가지가 30마리 동물의 운명을 정합니다.\n나의 선택은 지구를 빨갛게 만들까요, 초록색으로 지켜낼까요?",
-                start: "지구하자",
-                progress: "구조 진행도",
-                scoreLabel: "생존율",
-                earthStatus: "지구 상태",
-                earthGreen: "초록 지구",
-                earthRed: "빨간 지구 (온난화)",
-                next: "다음 상황으로",
-                resultTitle: "최종 구조 보고서",
-                survivalIdx: "생태계 생존 지표",
-                restart: "다시 도전하기",
-                level3: "완벽한 수호자!",
-                level2: "훌륭한 실천가",
-                level1: "위험한 타협...",
-                level0: "편리함의 대가",
-                sub3: "동물들이 당신을 보고 환하게 웃고 있어요!",
-                sub2: "좋은 선택입니다. 조금만 더 노력해볼까요?",
-                sub1: "한 번의 타협이 모여 지구가 뜨거워지고 있습니다.",
-                sub0: "당신의 편리함 때문에 친구들이 집을 잃고 말았어요.",
-                resGood: "당신은 진정한 지구의 영웅입니다! 동물의 왕국이 당신을 기억할 것입니다.",
-                resAvg: "절반의 성공입니다. 하지만 '적당히'라는 마음이 지구를 지치게 하고 있네요.",
-                resBad: "경고! 당신의 생활 방식이 지속된다면 동물들은 사라지고 지구는 멈추게 됩니다."
-            },
-            en: {
-                desc: "30 small habits of students decide the fate of 30 animals.\nWill your compromise turn Earth red or keep it green?",
-                start: "Start Earth Rescue",
-                progress: "Rescue Progress",
-                scoreLabel: "Survival Rate",
-                earthStatus: "Earth Status",
-                earthGreen: "Green Earth",
-                earthRed: "Red Earth (Global Warming)",
-                next: "Next Situation",
-                resultTitle: "Final Rescue Report",
-                survivalIdx: "Ecosystem Index",
-                restart: "Try Again",
-                level3: "Perfect Guardian!",
-                level2: "Great Practitioner",
-                level1: "Dangerous Compromise...",
-                level0: "Price of Convenience",
-                sub3: "The animals are smiling brightly at you!",
-                sub2: "Good choice. Can we try a little harder?",
-                sub1: "Each compromise adds up to a warmer planet.",
-                sub0: "Friends lost their homes due to your convenience.",
-                resGood: "You are a true Earth Hero! The animal kingdom will remember you.",
-                resAvg: "Halfway success. But 'doing enough' is tiring the planet.",
-                resBad: "Warning! If your lifestyle continues, animals will vanish and Earth will stop."
-            },
-            th: {
-                desc: "30 นิสัยเล็กๆ ของนักเรียนตัดสินชะตากรรมของสัตว์ 30 ตัว\nการประนีประนอมของคุณจะทำให้โลกเป็นสีแดงหรือสีเขียว?",
-                start: "เริ่มการกู้โลก",
-                progress: "ความคืบหน้า",
-                scoreLabel: "อัตราการรอดชีวิต",
-                earthStatus: "สถานะของโลก",
-                earthGreen: "โลกสีเขียว",
-                earthRed: "โลกสีแดง (ภาวะโลกร้อน)",
-                next: "สถานการณ์ต่อไป",
-                resultTitle: "รายงานกู้โลกฉบับสุดท้าย",
-                survivalIdx: "ดัชนีระบบนิเวศ",
-                restart: "ลองอีกครั้ง",
-                level3: "ผู้พิทักษ์ที่สมบูรณ์แบบ!",
-                level2: "นักปฏิบัติที่ยอดเยี่ยม",
-                level1: "การประนีประนอมที่อันตราย...",
-                level0: "ราคาของความสบาย",
-                sub3: "สัตว์ทุกตัวกำลังยิ้มให้คุณอย่างสดใส!",
-                sub2: "ทางเลือกที่ดี พยายามขึ้นอีกนิดนะ?",
-                sub1: "การยอมความในแต่ละครั้งรวมกันทำให้โลกร้อนขึ้น",
-                sub0: "เพื่อนๆ ต้องเสียบ้านเพราะความสบายของคุณ",
-                resGood: "คุณคือฮีโร่ตัวจริงของโลก! อาณาจักรสัตว์จะจดจำคุณไว้",
-                resAvg: "สำเร็จเพียงครึ่งเดียว ความรู้สึก 'แค่นี้พอ' กำลังทำให้โลกเหนื่อยล้า",
-                resBad: "คำเตือน! หากวิถีชีวิตแบบนี้ยังดำเนินต่อไป สัตว์จะหายไปและโลกจะหยุดหมุน"
-            }
-        };
-
-        // Utility: Shuffle array
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -361,12 +518,11 @@
             const optionsBox = document.getElementById('options-box');
             optionsBox.innerHTML = '';
             
-            // Shuffle options for each question
             const shuffledOptions = shuffle([...q.o]);
             
             shuffledOptions.forEach((opt) => {
                 const b = document.createElement('button');
-                b.className = "option-btn p-6 rounded-3xl font-bold flex flex-col justify-center items-center text-center gap-2";
+                b.className = "option-btn p-5 rounded-3xl font-bold flex flex-col justify-center items-center text-center gap-2 text-sm md:text-base";
                 b.innerHTML = `<span>${opt.t[lang]}</span>`;
                 b.onclick = () => handleChoice(opt.s);
                 optionsBox.appendChild(b);
@@ -443,7 +599,81 @@
             document.getElementById('final-desc').innerText = desc;
         }
 
-        // Init
+        const trans = {
+            ko: {
+                desc: "초등학생의 사소한 습관 30가지가 30마리 동물의 운명을 정합니다.\n당신의 타협은 지구를 빨갛게 만들까요, 초록색으로 지켜낼까요?",
+                start: "지구 구조 시작하기",
+                progress: "구조 진행도",
+                scoreLabel: "생존율",
+                earthStatus: "지구 상태",
+                earthGreen: "초록 지구",
+                earthRed: "빨간 지구 (온난화)",
+                next: "다음 상황으로",
+                resultTitle: "최종 구조 보고서",
+                survivalIdx: "생태계 생존 지표",
+                restart: "다시 도전하기",
+                level3: "완벽한 수호자!",
+                level2: "훌륭한 실천가",
+                level1: "위험한 타협...",
+                level0: "편리함의 대가",
+                sub3: "동물들이 당신을 보고 환하게 웃고 있어요!",
+                sub2: "좋은 선택입니다. 조금만 더 노력해볼까요?",
+                sub1: "한 번의 타협이 모여 지구가 뜨거워지고 있습니다.",
+                sub0: "당신의 편리함 때문에 친구들이 집을 잃고 말았어요.",
+                resGood: "당신은 진정한 지구의 영웅입니다! 동물의 왕국이 당신을 기억할 것입니다.",
+                resAvg: "절반의 성공입니다. 하지만 '적당히'라는 마음이 지구를 지치게 하고 있네요.",
+                resBad: "경고! 당신의 생활 방식이 지속된다면 동물들은 사라지고 지구는 멈추게 됩니다."
+            },
+            en: {
+                desc: "30 small habits of students decide the fate of 30 animals.\nWill your compromise turn Earth red or keep it green?",
+                start: "Start Earth Rescue",
+                progress: "Rescue Progress",
+                scoreLabel: "Survival Rate",
+                earthStatus: "Earth Status",
+                earthGreen: "Green Earth",
+                earthRed: "Red Earth (Global Warming)",
+                next: "Next Situation",
+                resultTitle: "Final Rescue Report",
+                survivalIdx: "Ecosystem Index",
+                restart: "Try Again",
+                level3: "Perfect Guardian!",
+                level2: "Great Practitioner",
+                level1: "Dangerous Compromise...",
+                level0: "Price of Convenience",
+                sub3: "The animals are smiling brightly at you!",
+                sub2: "Good choice. Can we try a little harder?",
+                sub1: "Each compromise adds up to a warmer planet.",
+                sub0: "Friends lost their homes due to your convenience.",
+                resGood: "You are a true Earth Hero! The animal kingdom will remember you.",
+                resAvg: "Halfway success. But 'doing enough' is tiring the planet.",
+                resBad: "Warning! If your lifestyle continues, animals will vanish and Earth will stop."
+            },
+            th: {
+                desc: "30 นิสัยเล็กๆ ของนักเรียนตัดสินชะตากรรมของสัตว์ 30 ตัว\nการประนีประนอมของคุณจะทำให้โลกเป็นสีแดงหรือสีเขียว?",
+                start: "เริ่มการกู้โลก",
+                progress: "ความคืบหน้า",
+                scoreLabel: "อัตราการรอดชีวิต",
+                earthStatus: "สถานะของโลก",
+                earthGreen: "โลกสีเขียว",
+                earthRed: "โลกสีแดง (ภาวะโลกร้อน)",
+                next: "สถานการณ์ต่อไป",
+                resultTitle: "รายงานกู้โลกฉบับสุดท้าย",
+                survivalIdx: "ดัชนีระบบนิเวศ",
+                restart: "ลองอีกครั้ง",
+                level3: "ผู้พิทักษ์ที่สมบูรณ์แบบ!",
+                level2: "นักปฏิบัติที่ยอดเยี่ยม",
+                level1: "การประนีประนอมที่อันตราย...",
+                level0: "ราคาของความสบาย",
+                sub3: "สัตว์ทุกตัวกำลังยิ้มให้คุณอย่างสดใส!",
+                sub2: "ทางเลือกที่ดี พยายามขึ้นอีกนิดนะ?",
+                sub1: "การยอมความในแต่ละครั้งรวมกันทำให้โลกร้อนขึ้น",
+                sub0: "เพื่อนๆ ต้องเสียบ้านเพราะความสบายของคุณ",
+                resGood: "คุณคือฮีโร่ตัวจริงของโลก! อาณาจักรสัตว์จะจดจำคุณไว้",
+                resAvg: "สำเร็จเพียงครึ่งเดียว ความรู้สึก 'แค่นี้พอ' กำลังทำให้โลกเหนื่อยล้า",
+                resBad: "คำเตือน! หากวิถีชีวิตแบบนี้ยังดำเนินต่อไป สัตว์จะหายไปและโลกจะหยุดหมุน"
+            }
+        };
+
         setLang('ko');
     </script>
 </body>
